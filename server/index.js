@@ -18,11 +18,10 @@ const admin = require('./routes/admin')
 // Middlewares
 app.use(cors())
 app.use(fileUpload())
-app.use(express.static( path.join(__dirname, 'uploads')))
+app.use(express.static('/static', path.join(__dirname, 'uploads')))
 app.use(express.json())
 
 // Routes Definition
-app.get('/static', (req, res) => res.send("This STATIC Works!"))
 app.get('/api', (req, res) => res.send("This API Works!"))
 app.use('/api/youtube', youtube)
 app.use('/api/admin', admin)
