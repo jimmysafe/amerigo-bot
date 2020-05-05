@@ -18,7 +18,7 @@ const admin = require('./routes/admin')
 // Middlewares
 app.use(cors())
 app.use(fileUpload())
-app.use(express.static('/static', path.join(__dirname, 'uploads')))
+app.use('/static', express.static(path.join(__dirname, 'uploads')))
 app.use(express.json())
 
 // Routes Definition
