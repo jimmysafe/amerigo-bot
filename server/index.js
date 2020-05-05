@@ -21,7 +21,7 @@ app.use(express.static('uploads'))
 app.use(express.json())
 
 // Routes Definition
-app.get('/api/', (req, res) => res.send("This API Works!"))
+app.get('/', (req, res) => res.send("This API Works!"))
 app.use('/api/youtube', youtube)
 app.use('/api/admin', admin)
 
