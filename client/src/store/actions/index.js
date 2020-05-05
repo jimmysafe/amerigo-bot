@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const initAudioFiles = (id) => {
     return async(dispatch) => {
-        let res = await axios.post('/admin', { id })
+        let res = await axios.post('/api/admin', { id })
         if(res.data){
             dispatch(initAudioFileSuccess(res.data));
         }

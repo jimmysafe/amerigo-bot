@@ -31,7 +31,7 @@ const Admin = (props) => {
 
     const handleConfirm = async(i, newName, prevName) => {
         await dispatch(editAudioFile(i, newName))
-        let res = await axios.post('/rename', { id: guildId, prevName, newName })
+        let res = await axios.post('/api/admin/rename', { id: guildId, prevName, newName })
         console.log(res)
         setEditing(false)
         setEditedName('')
@@ -40,7 +40,7 @@ const Admin = (props) => {
 
     const handleDelete = async(i, name) => {
         await dispatch(deleteAudioFile(i, name))
-        let res = await axios.post('/delete', { id: guildId, fileName: name })
+        let res = await axios.post('/api/admin/delete', { id: guildId, fileName: name })
         console.log(res)
     }
 

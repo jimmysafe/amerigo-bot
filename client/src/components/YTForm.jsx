@@ -41,7 +41,7 @@ const YTForm = (props) => {
             const startTime = `${formattedValues[1]}:${formattedValues[2]}:${formattedValues[3]}`
             const endTime = `${formattedValues[4]}:${formattedValues[5]}:${formattedValues[6]}`
 
-            let res = await axios.post('/youtube', { guildId, fileName, url, startTime, endTime })
+            let res = await axios.post('/api/youtube', { guildId, fileName, url, startTime, endTime })
             if(res.data === "success") setIsLoading(false)
             toast("File caricato con successo!")
             values.url = ''
