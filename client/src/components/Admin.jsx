@@ -58,7 +58,7 @@ const Admin = (props) => {
         <div className="audio-files-container">
             {audioFiles.map((file, i) => (
                 <div key={i} className="audio-file">
-                    <audio src={`/${guildId}/${file.name}.mp3`} controls></audio>
+                    <audio src={`/files/${guildId}/${file.name}.mp3`} controls></audio>
                     <p style={{ minWidth: "156px", textAlign: "center" }}>{file.name}</p>
                     <p>{file.created_at}</p>
                     <div className="actions">

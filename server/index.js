@@ -50,7 +50,7 @@ client.on('message', async msg => {
     if(msg.content === '-a info'){
         evaluateGuildDir()
         await msg.member.voice.channel.join();
-        msg.reply(`Load your audios here: http://134.209.23.184/${msg.guild.id}`)
+        msg.reply(`Load your audios here: https://amerigo.xyz/${msg.guild.id}`)
     }
 
     if(msg.content === '-a shuffle'){
