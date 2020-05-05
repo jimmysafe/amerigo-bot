@@ -18,8 +18,8 @@
     "react-youtube": "^7.9.0"
   },
   "scripts": {
-    "start": "HOST=amerigo.xyz react-scripts start",
-    "build": "HOST=amerigo.xyz react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
