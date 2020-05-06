@@ -5,9 +5,11 @@ const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const fs = require('fs')
 const path = require('path')
+const { Timer } = require('easytimer.js');
 
 const app = express()
 const client = new Discord.Client();
+const timer = new Timer()
 
 const port = 9000
 
@@ -31,6 +33,34 @@ client.once('ready', () => {
     console.log("BOT READY")
 });
 
+let bot
+
+const leave = async(msg) => {
+    await msg.member.voice.channel.leave()
+    msg.channel.send("Amerigo left the channel because he was bored..")
+}
+
+timer.addEventListener('secondsUpdated', async(e) => {
+    let seconds = timer.getTimeValues().seconds
+    if(seconds >= 300) {
+        leave(bot)
+        timer.stop()
+    }
+})
+
+const initTimer = (timer, msg) => {
+    let seconds = timer.getTimeValues().seconds
+    if(seconds > 0){
+        timer.reset()
+        bot = msg
+    } else {
+        msg.reply('view all Amerigo\'s available commands --> -a commands')
+        timer.start({ precision: 'seconds' })
+        bot = msg
+    }
+}
+
+
 client.on('message', async msg => {
     if (!msg.guild) return;
 
@@ -43,19 +73,31 @@ client.on('message', async msg => {
         else console.log("guild directory exists")
     }
 
+    if(msg.content === '-a invite'){
+        await msg.member.voice.channel.join();
+        msg.reply('Add Amerigo Bot to your server using this link -> https://amerigo.xyz')
+    }
+
+    if(msg.content === '-a TIMER'){
+        msg.reply(timer.getTimeValues().seconds + ' seconds')
+    }
+
     if(msg.content === '-a reset'){
+        await msg.member.voice.channel.join();
         await msg.member.voice.channel.leave()
     }
 
     if(msg.content === '-a info'){
         evaluateGuildDir()
         await msg.member.voice.channel.join();
+        initTimer(timer, msg)
         msg.reply(`Load your audios here: https://amerigo.xyz/${msg.guild.id}`)
     }
 
     if(msg.content === '-a shuffle'){
         evaluateGuildDir()
         const connection = await msg.member.voice.channel.join();
+        initTimer(timer, msg)
         const dir = `${__dirname}/uploads/${msg.guild.id}`
         fs.readdir(dir, (err, files) => {
             const randomItem = files[Math.floor(Math.random()*files.length)];
@@ -69,6 +111,7 @@ client.on('message', async msg => {
     if (msg.content === '-a last'){
         evaluateGuildDir()
         const connection = await msg.member.voice.channel.join();
+        initTimer(timer, msg)
         const dir = `${__dirname}/uploads/${msg.guild.id}/`
         fs.readdir(dir, (err, files) => {
             if(err) console.log(err)
@@ -86,8 +129,11 @@ client.on('message', async msg => {
 
     if(msg.content === '-a commands'){
         evaluateGuildDir()
+        await msg.member.voice.channel.join();
+        initTimer(timer, msg)
         let allCommands = [
             { name: "BASIC COMMANDS", value: "--------" },
+            { name: '-a invite', value: "Give your friends the link to add Amerigo on their discord server as well!"},
             { name: '-a info', value: "Displays the web url where you can upload your audios"},
             { name: "-a shuffle", value: "Randomly select and plays a audio from your audios" },
             { name: '-a last', value: "Select and plays the last added audio" },
@@ -116,6 +162,7 @@ client.on('message', async msg => {
                     connection.play(`${dir}/${fileName}.mp3`, {
                         volume: 0.5,
                     })
+                    initTimer(timer, msg)
                     msg.reply("Playing, " + fileName)
                 }
             })
