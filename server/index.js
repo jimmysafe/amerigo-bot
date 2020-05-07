@@ -42,7 +42,6 @@ const leave = async(msg) => {
 
 timer.addEventListener('secondsUpdated', async(e) => {
     let time = timer.getTimeValues().toString(['minutes', 'seconds'])
-    console.log(time)
     if(time === "05:00") {
         leave(bot)
         timer.stop()
