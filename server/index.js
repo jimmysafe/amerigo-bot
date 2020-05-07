@@ -41,16 +41,17 @@ const leave = async(msg) => {
 }
 
 timer.addEventListener('secondsUpdated', async(e) => {
-    let seconds = timer.getTimeValues().seconds
-    if(seconds >= 300) {
+    let time = timer.getTimeValues().toString(['minutes', 'seconds'])
+    console.log(time)
+    if(time === "05:00") {
         leave(bot)
         timer.stop()
     }
 })
 
 const initTimer = (timer, msg) => {
-    let seconds = timer.getTimeValues().seconds
-    if(seconds > 0){
+    let time = timer.getTimeValues().toString(['minutes', 'seconds'])
+    if(time !== "00:00"){
         timer.reset()
         bot = msg
     } else {
@@ -79,7 +80,8 @@ client.on('message', async msg => {
     }
 
     if(msg.content === '-a TIMER'){
-        msg.reply(timer.getTimeValues().seconds + ' seconds')
+        let time = timer.getTimeValues().toString(['minutes', 'seconds'])
+        msg.reply( time )
     }
 
     if(msg.content === '-a reset'){
