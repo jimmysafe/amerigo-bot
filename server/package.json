@@ -27,7 +27,7 @@
     "uuid": "^7.0.2",
     "youtube-dl": "^3.0.2",
     "ytdl": "^1.2.0",
-    "ytdl-core": "^2.0.0"
+    "ytdl-core": "^3.4.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
